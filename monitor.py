@@ -63,7 +63,8 @@ def sample_once():
     print(
         f"[{m['timestamp']}] "
         f"CPU {m['cpu_percent']}% | " 
-        f"MEM {m['mem_percent']}% "| DISK {m['disk_percent']}%") "
+        f"MEM {m['mem_percent']}% | "
+        f"DISK {m['disk_percent']}% " 
     )
 
 
