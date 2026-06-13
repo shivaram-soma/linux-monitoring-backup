@@ -6,6 +6,7 @@ from datetime import datetime
 
 import matplotlib
 import matplotlib.pyplot as plt
+
 matplotlib.use("Agg")
 
 ts, cpu, mem = [], [], []
@@ -19,11 +20,11 @@ plt.figure(figsize=(12, 5))
 plt.plot(ts, cpu, label="CPU %", linewidth=1.5)
 plt.plot(ts, mem, label="Memory %", linewidth=1.5)
 plt.axhline(y=80, linestyle="--", alpha=0.5, color="red", label="Threshold 80%")
-plt.xlabel("Time"); 
-plt.ylabel("Usage %"); 
+plt.xlabel("Time") 
+plt.ylabel("Usage %") 
 plt.title("CPU & Memory Trends")
-plt.legend(); 
-plt.grid(alpha=0.3); 
+plt.legend() 
+plt.grid(alpha=0.3) 
 plt.tight_layout()
 plt.savefig("trends.png", dpi=120)
 print("Saved trends.png")

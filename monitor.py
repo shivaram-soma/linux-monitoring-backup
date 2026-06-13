@@ -64,6 +64,7 @@ def sample_once():
         f"[{m['timestamp']}] "
         f"CPU {m['cpu_percent']}% | " 
         f"MEM {m['mem_percent']}% "| DISK {m['disk_percent']}%") "
+    )
 
 
 if __name__ == "__main__":
