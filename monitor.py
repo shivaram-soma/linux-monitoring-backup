@@ -60,7 +60,10 @@ def sample_once():
     m = collect()
     log_csv(m)
     check_thresholds(m)
-    print(f"[{m['timestamp']}] CPU {m['cpu_percent']}% | MEM {m['mem_percent']}% | DISK {m['disk_percent']}%")
+    print(
+        f"[{m['timestamp']}] "
+        f"CPU {m['cpu_percent']}% | " 
+        f"MEM {m['mem_percent']}% "| DISK {m['disk_percent']}%") "
 
 
 if __name__ == "__main__":
