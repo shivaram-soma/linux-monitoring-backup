@@ -1,0 +1,16 @@
+[Unit]
+Description=Linux System Monitor — CPU/Memory/Disk sampler
+After=network.target
+
+[Service]
+Type=simple
+User=shiva
+WorkingDirectory=/home/shiva/linux-monitoring-backup
+ExecStart=/usr/bin/python3 /home/shiva/linux-monitoring-backup/monitor.py --loop
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

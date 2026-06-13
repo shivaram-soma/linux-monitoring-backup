@@ -1,0 +1,18 @@
+services:
+  monitor:
+    build: .
+    container_name: linux-monitor
+    restart: unless-stopped
+    # Mount host proc/sys so psutil reads real host metrics
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - ./output:/app/output          # persist logs and charts on host
+    environment:
+      - HOST_PROC=/host/proc
+      - HOST_SYS=/host/sys
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

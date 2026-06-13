@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest flake8
+
+      - name: Lint
+        run: flake8 monitor.py graph.py --max-line-length=100
+
+      - name: Run monitor single sample
+        run: python3 monitor.py
+
+      - name: Verify CSV was created
+        run: |
+          test -f health_log.csv && echo "health_log.csv created OK"
+          head -2 health_log.csv
+
+      - name: Generate graph from sample data
+        run: python3 graph.py
+
+      - name: Verify chart was created
+        run: test -f trends.png && echo "trends.png created OK"
+
+  backup-test:
+    name: Test Backup Script
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Make backup.sh executable
+        run: chmod +x backup.sh
+
+      - name: Create test source directory
+        run: |
+          mkdir -p /tmp/test-source
+          echo "test content" > /tmp/test-source/file.txt
+
+      - name: Run backup
+        run: bash backup.sh /tmp/test-source /tmp/test-backups
+
+      - name: Verify archive was created
+        run: |
+          ls /tmp/test-backups/backup_*.tar.gz
+          cat /tmp/test-backups/backup.log
+
+      - name: Test rotation (create 6 backups, expect oldest to rotate)
+        run: |
+          for i in {1..6}; do
+            bash backup.sh /tmp/test-source /tmp/test-backups
+            sleep 1
+          done
+          RECENT=$(ls /tmp/test-backups/backup_*.tar.gz 2>/dev/null | wc -l)
+          echo "Recent backups: $RECENT"
+          test "$RECENT" -le 5

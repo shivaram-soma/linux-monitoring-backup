@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+
+# Generated output files (don't commit monitor data to git)
+health_log.csv
+alerts.log
+trends.png
+
+# Backup archives
+backups/
+output/
