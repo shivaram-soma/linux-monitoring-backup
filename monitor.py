@@ -62,9 +62,9 @@ def sample_once():
     check_thresholds(m)
     print(
         f"[{m['timestamp']}] "
-        f"CPU {m['cpu_percent']}% | " 
+        f"CPU {m['cpu_percent']}% | "
         f"MEM {m['mem_percent']}% | "
-        f"DISK {m['disk_percent']}% " 
+        f"DISK {m['disk_percent']}% "
     )
 
 
